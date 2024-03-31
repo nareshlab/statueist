@@ -1,111 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roboflow Inference Form</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous">
+    <style>
+      /* Reset styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f8f8f8;
+}
+
+.header {
+  background-color: #ffffff;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header__grid {
+  display: grid;
+  grid-template-columns: auto 1fr 1fr 1fr;
+  gap: 20px;
+}
+
+.header__logo {
+  max-width: 100px;
+  height: auto;
+}
+
+.header__label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.input {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.content {
+  padding: 20px;
+}
+
+.content__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.col-12-s6-m4,
+.col-12-m8,
+.col-6-m3 {
+  width: 100%;
+}
+
+.relative {
+  position: relative;
+}
+
+.input__label {
+  font-size: 14px;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.bttn {
+  padding: 10px 20px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.bttn.active {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.bttn.left {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.bttn.right {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.fill {
+  width: 100%;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+}
+
+.text--small {
+  font-size: 12px;
+}
+
+.bttn__primary {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.bttn__primary:hover {
+  background-color: #0056b3;
+}
+
+.result {
+  margin-top: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 20px;
+}
+
+.divider {
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 20px;
+}
+
+.result__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.headline {
+  font-size: 18px;
+}
+
+.codeblock {
+  white-space: pre-wrap;
+  overflow-x: auto;
+}
+
+        /* Add your CSS styles here */
+    </style>
 </head>
 
 <body>
-	<form id="inputForm">
-		<div class="header">
-			<div class="header__grid">
-				<img class="header__logo" src="https://uploads-ssl.webflow.com/5f6bc60e665f54545a1e52a5/6143750f1177056d60fc52d9_roboflow_logomark_inference.png" alt="Roboflow Inference">
-				<div>
-					<label class="header__label" for="model">Model</label>
-					<input class="input" type="text" id="model" value="statueist">
-				</div>
-				<div>
-					<label class="header__label" for="version">Version</label>
-					<input class="input" type="number" id="version" value="3">
-				</div>
-				<div>
-					<label class="header__label" for="api_key">API Key</label>
-					<input class="input" type="text" id="api_key" value="m2RT2P9vSgzL7zWvoeKn">
-				</div>
-			</div>
-		</div>
-      
-		<div class="content">
-			<div class="content__grid">
-				<div class="col-12-s6-m4" id="method">
-					<label class="input__label">Upload Method</label>
-					<div>
-						<button data-value="upload" id="computerButton" class="bttn left fill active">Upload</button>
-						<button data-value="url" id="urlButton" class="bttn right fill">URL</button>
-					</div>
-				</div>
+    <form id="inputForm">
+        <div class="header">
+            <div class="header__grid">
+                <img class="header__logo" src="https://uploads-ssl.webflow.com/5f6bc60e665f54545a1e52a5/6143750f1177056d60fc52d9_roboflow_logomark_inference.png" alt="Roboflow Inference">
+                <div>
+                    <label class="header__label" for="model">Model</label>
+                    <input class="input" type="text" id="model" placeholder="Enter model...">
+                </div>
+                <div>
+                    <label class="header__label" for="version">Version</label>
+                    <input class="input" type="number" id="version" placeholder="Enter version...">
+                </div>
+                <div>
+                    <label class="header__label" for="api_key">API Key</label>
+                    <input class="input" type="text" id="api_key" placeholder="Enter API key...">
+                </div>
+            </div>
+        </div>
 
-				<div class="col-12-m8" id="fileSelectionContainer">
-					<label class="input__label" for="file">Select File</label>
-					<div class="flex">
-						<input class="input input--left flex-1" type="text" id="fileName" disabled />							
-						<button id="fileMock" class="bttn right active">Browse</button>
-					</div>
-					<input style="display: none;" type="file" id="file" />
-				</div>
+        <div class="content">
+            <div class="content__grid">
+                <div class="col-12-s6-m4" id="method">
+                    <label class="input__label">Upload Method</label>
+                    <div>
+                        <button data-value="upload" id="computerButton" class="bttn left fill active">Upload</button>
+                        <button data-value="url" id="urlButton" class="bttn right fill">URL</button>
+                    </div>
+                </div>
 
-				<div class="col-12-m8" id="urlContainer">
-					<label class="input__label" for="file">Enter Image URL</label>
-					<div class="flex">
-						<input type="text" id="url" placeholder="https://path.to/your.jpg" class="input"/><br>
-					</div>
-				</div>
-        
-				<div class="col-12-m6">
-					<label class="input__label" for="classes">Filter Classes</label>
-					<input type="text" id="classes" placeholder="Enter class names" class="input"/><br>
-					<span class="text--small">Separate names with commas</span>
-				</div>
+                <div class="col-12-m8" id="fileSelectionContainer">
+                    <label class="input__label" for="file">Select File</label>
+                    <div class="flex">
+                        <input class="input input--left flex-1" type="text" id="fileName" disabled>
+                        <button id="fileMock" class="bttn right active">Browse</button>
+                    </div>
+                    <input style="display: none;" type="file" id="file">
+                </div>
 
-				<div class="col-6-m3 relative">
-					<label class="input__label" for="confidence">Min Confidence</label>
-					<div>
-						<i class="fas fa-crown"></i>
-						<span class="icon">%</span>
-						<input type="number" id="confidence" value="50" max="100" accuracy="2" min="0" class="input input__icon"/></div>
-					</div>
-				<div class="col-6-m3 relative">
-					<label class="input__label" for="overlap">Max Overlap</label>
-					<div>
-						<i class="fas fa-object-ungroup"></i>
-						<span class="icon">%</span>
-						<input type="number" id="overlap" value="50" max="100" accuracy="2" min="0" class="input input__icon"/></div>
-				</div>
-				<div class="col-6-m3" id="format">
-					<label class="input__label">Inference Result</label>
-					<div>
-						<button id="imageButton" data-value="image" class="bttn left fill active">Image</button>
-						<button id="jsonButton" data-value="json" class="bttn right fill">JSON</button>
-					</div>
-				</div>
-				<div class="col-12 content__grid" id="imageOptions">
-					<div class="col-12-s6-m4" id="labels">
-						<label class="input__label">Labels</label>
-						<div>
-							<button class="bttn left active">Off</button>
-							<button data-value="on" class="bttn right">On</button>
-						</div>
-					</div>
-					<div class="col-12-s6-m4" id="stroke">
-						<label class="input__label">Stroke Width</label>
-						<div>
-							<button data-value="1" class="bttn left active">1px</button>
-							<button data-value="2" class="bttn">2px</button>
-							<button data-value="5" class="bttn">5px</button>
-							<button data-value="10" class="bttn right">10px</button>
-						</div>
-					</div>
-				</div>
-				<div class="col-12">
-					<button type="submit" value="Run Inference" class="bttn__primary">Run Inference</button>
-				</div>
-			</div>
-			<div class="result" id="resultContainer">
-				<div class="divider"></div>
-				<div class="result__header">
-					<h3 class="headline">Result</h3>
-					<a href="#">Copy Code</a>
-				</div>
-				<pre id="output" class="codeblock"/> here is your json </pre>
-			</div>
-		</div>
-	</form>
+                <div class="col-12-m8" id="urlContainer">
+                    <label class="input__label" for="file">Enter Image URL</label>
+                    <div class="flex">
+                        <input type="text" id="url" placeholder="https://path.to/your.jpg" class="input">
+                    </div>
+                </div>
+
+                <div class="col-12-m6">
+                    <label class="input__label" for="classes">Filter Classes</label>
+                    <input type="text" id="classes" placeholder="Enter class names" class="input">
+                    <span class="text--small">Separate names with commas</span>
+                </div>
+
+                <div class="col-6-m3 relative">
+                    <label class="input__label" for="confidence">Min Confidence</label>
+                    <div>
+                        <i class="fas fa-crown"></i>
+                        <span class="icon">%</span>
+                        <input type="number" id="confidence" value="50" max="100" accuracy="2" min="0" class="input input__icon">
+                    </div>
+                </div>
+
+                <div class="col-6-m3 relative">
+                    <label class="input__label" for="overlap">Max Overlap</label>
+                    <div>
+                        <i class="fas fa-object-ungroup"></i>
+                        <span class="icon">%</span>
+                        <input type="number" id="overlap" value="50" max="100" accuracy="2" min="0" class="input input__icon">
+                    </div>
+                </div>
+
+                <div class="col-6-m3" id="format">
+                    <label class="input__label">Inference Result</label>
+                    <div>
+                        <button id="imageButton" data-value="image" class="bttn left fill active">Image</button>
+                        <button id="jsonButton" data-value="json" class="bttn right fill">JSON</button>
+                    </div>
+                </div>
+
+                <div class="col-12 content__grid" id="imageOptions">
+                    <div class="col-12-s6-m4" id="labels">
+                        <label class="input__label">Labels</label>
+                        <div>
+                            <button class="bttn left active">Off</button>
+                            <button data-value="on" class="bttn right">On</button>
+                        </div>
+                    </div>
+                    <div class="col-12-s6-m4" id="stroke">
+                        <label class="input__label">Stroke Width</label>
+                        <div>
+                            <button data-value="1" class="bttn left active">1px</button>
+                            <button data-value="2" class="bttn">2px</button>
+                            <button data-value="5" class="bttn">5px</button>
+                            <button data-value="10" class="bttn right">10px</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <button type="submit" value="Run Inference" class="bttn__primary">Run Inference</button>
+                </div>
+            </div>
+
+            <div class="result" id="resultContainer">
+                <div class="divider"></div>
+                <div class="result__header">
+                    <h3 class="headline">Result</h3>
+                    <a href="#">Copy Code</a>
+                </div>
+                <pre id="output" class="codeblock">Here is your JSON</pre>
+            </div>
+        </div>
+    </form>
 </body>
+
+</html>
